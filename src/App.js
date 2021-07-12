@@ -5,7 +5,7 @@ import Forms from './components/Forms';
 function App() {
   return (
     <div>
-      <h1>React Dynamic forms</h1>
+      <h1>React Dynamic Forms</h1>
       <Forms />
     </div>
   )
