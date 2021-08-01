@@ -19,9 +19,15 @@ const Textarea = (props) => {
     }
 
     return(
-        <div>
-            <label>{data.label}</label><br/>
-            <textarea value={text} onChange={handleText} onBlur={handleData}></textarea><br/>
+        <div className="form-group py-2 px-3">
+            <label>{data.label}</label>
+            <textarea 
+                value={text} 
+                onChange={handleText} 
+                onBlur={handleData} 
+                className="form-control w-75"
+                required={true}
+            ></textarea>
         </div>
     )
 }

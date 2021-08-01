@@ -20,9 +20,15 @@ const Select = (props) => {
 
 
     return(
-        <div>
-            <label>{data.label}</label><br/>
-            <select value={selected} onChange={handleChange} onBlur={handleData}>
+        <div className="form-group px-3 py-2">
+            <label>{data.label}</label>
+            <select 
+                value={selected} 
+                onChange={handleChange} 
+                onBlur={handleData} 
+                className="form-select w-75"
+                required={true}
+            >
                 <option value="">select</option>
                 {data.choices.map((ele, i) => {
                     return (

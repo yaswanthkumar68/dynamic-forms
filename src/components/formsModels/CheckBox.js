@@ -5,6 +5,9 @@ const CheckBox = (props) => {
     const [ label, setLabel ] = useState('')
     const [ text, setText ] = useState('')
     const [ choices, setChoices ] = useState([])
+    const [ formErrors, setFormErrors ] = useState({})
+    const [ message, setMessage ] = useState('')
+    const errors = {}
 
     const handleLabel = (e) => {
         setLabel(e.target.value)
@@ -15,37 +18,76 @@ const CheckBox = (props) => {
     }
 
     const handleAdd = () => {
-        setChoices([...choices, {name:text, isChecked:false}])
-        setText('')
+        if(text.trim()){
+            setChoices([...choices, {name:text, isChecked:false}])
+            setText('')
+        }
+        else{
+            setMessage('choices name cannot be blank')
+        }
+    }
+
+    const handleFocus = () => {
+        setFormErrors({})
+        setMessage('')
+    }
+    const formValidation = () => {
+        if(label.trim() === ''){
+            errors.labelName = 'label name cannot be blank'
+        }
+        else if(choices.length <= 1){
+            errors.choicesLength = 'enter more than one choices'
+        }
     }
 
     const handleAddForm = () => {
-        const obj = {
-            id : Number(new Date()),
-            type : 'checkbox',
-            label : label,
-            choices : choices,
-            value : []
+        formValidation()
+        if(Object.keys(errors).length === 0){
+            const obj = {
+                id : Number(new Date()),
+                type : 'checkbox',
+                label : label,
+                choices : choices,
+                value : []
+            }
+            //console.log(obj)
+            addFormData(obj)
         }
-        //console.log(obj)
-        addFormData(obj)
+        else{
+            setFormErrors(errors)
+        }
     }
 
 
 
     return(
-        <div>
-            <label>Enter label name</label><br/>
-            <input type="text" value={label} onChange={handleLabel} /><br/>
+        <div className="form-group m-2">
+            <label>Enter label name</label>
+            <input 
+                type="text" 
+                value={label} 
+                onChange={handleLabel} 
+                onFocus={handleFocus}
+                className="form-control my-2" 
+            /><span>{formErrors.labelName ? <p>{formErrors.labelName}</p> : null}</span>
 
-            <label>Add choices</label><br/>
+            <label>Add choices</label>
+            <div className="d-flex justify-content-between">
+                <input 
+                    type="text" 
+                    value={text} 
+                    onChange={handleText} 
+                    onFocus={handleFocus}
+                    className="form-control my-2 w-75" 
+                />
+                <button className="btn btn-info my-2" onClick={handleAdd}>Add choices</button>
+            </div><span>{message ? <p>{message}</p> : null}</span>
+
             {choices.map((ele, i) => {
                 return <li key={i}>{ele.name}</li>
             })}
-            <input type="text" value={text} onChange={handleText} /><br/>
-            <button onClick={handleAdd}>Add choices</button><br/>
-
-            <button onClick={handleAddForm}>Add to form</button>
+            {formErrors.choicesLength ? <p>{formErrors.choicesLength}</p> : null}
+            <button className="btn btn-primary my-2" onClick={handleAddForm}>Add to form</button>
         </div>
     )
 }

@@ -17,12 +17,18 @@ const Text = (props) => {
     const handleData = () => {
         addValue(data.id, text)
     }
-
-
+    
     return(
-        <div>
-            <label>{data.label}</label><br/>
-            <input type="text" value={text} onChange={handleText} onBlur={handleData} /><br/>
+        <div className="form-group py-2 px-3">
+            <label>{data.label}</label>
+            <input 
+                type={data.type} 
+                value={text} 
+                onChange={handleText} 
+                onBlur={handleData} 
+                className="form-control w-75" 
+                required={true}
+            />
         </div>
     )
 }

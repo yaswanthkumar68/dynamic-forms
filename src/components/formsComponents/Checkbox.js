@@ -43,12 +43,13 @@ const Checkbox = (props) => {
     }
 
     return(
-        <div>
+        <div className="form-check py-2 px-3">
             <label>{data.label}</label>
             {values.map((ele, i) => {
                 return (
                     <div key={i}>
                         <input 
+                            className="form-check-input mx-3"
                             type="checkbox" 
                             checked={ele.isChecked} 
                             onChange={(e) => {handleCheck(i, e)}}
